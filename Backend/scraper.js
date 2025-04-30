@@ -5,13 +5,15 @@ const { Builder, By, until } = require("selenium-webdriver");
 
 const scrapeData = async (url) => {
   const chrome = require("selenium-webdriver/chrome");
-  const options = new chrome.Options();
-  let driver = await new Builder()
+  const options = new chrome.Options()
+    .setPageLoadStrategy("normal")
+    .addArguments("--headless=new")
+    .addArguments("--incognito")
+    
+    
+    let driver = await new Builder()
     .forBrowser("chrome")
-    .setChromeOptions(
-      options.setPageLoadStrategy("normal"),
-      options.addArguments("--headless=new")
-    )
+    .setChromeOptions(options)
     .build();
   try {
     await driver.get(url);
@@ -222,4 +224,4 @@ module.exports = {
   getAddressData,
   scrapeData,
   getLink
-}; 
+};
